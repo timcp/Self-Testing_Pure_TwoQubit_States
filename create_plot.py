@@ -11,41 +11,95 @@ from matplotlib.ticker import NullFormatter  # useful for `logit` scale
 
 
 
+def create_plot(ax, alpha, ystart, dotsize):
+    
+    # plot the results from Bancal et al.
+    also_if_trivial = False
+    BNSVY2015_lower_bounds = BNSVY2015.lower_bounds(alpha=alpha,
+                                                    also_if_trivial=also_if_trivial)
+    BNSVY2015_violations = BNSVY2015.violations(alpha=alpha, also_if_trivial=also_if_trivial)
+    ax.plot(BNSVY2015_violations, BNSVY2015_lower_bounds, 'g.', markersize=dotsize)
+    
+    # plot the CKS18 results
+    CKS2018_violations = CKS2018.violations(alpha=alpha, also_if_trivial=False)
+    print(min(CKS2018_violations))
+    CKS2018_lower_bounds = \
+            [ CKS2018.s(alpha=alpha) * beta + CKS2018.mu(alpha=alpha) for beta in CKS2018_violations]
+    ax.plot(CKS2018_violations, CKS2018_lower_bounds, 'r')
+    
+    # plot trivial lower bound
+    violations = CKS2018.violations(alpha=alpha, also_if_trivial=True)
+    
+    trivial_lowbound = tiltedCHSH.trivial_lower_bound(alpha)
+    ax.plot(violations, np.array([trivial_lowbound for __ in violations]),'--',color='0.75')
+    
+    # plot trivial upper bound
+    (a, b) = tiltedCHSH.trivial_upper_bound(alpha)
+    ax.plot(violations, [a * violation + b for violation in violations],':',color='0.75')
 
-alpha=0
+
+    # plot alpha
+    cv = tiltedCHSH.classical_value(alpha)
+    qv = tiltedCHSH.quantum_value(alpha)
+    ax.text(cv + 0.14 * (qv - cv),
+            1.03 - 0.4 * (1.03-ystart),
+            r'$\alpha={}$'.format(alpha),
+            fontsize=20)
+
+    # plot beta-star
+    ax.vlines(x=CKS2018.beta_star(alpha),
+              ymin=ystart,
+              ymax=tiltedCHSH.trivial_lower_bound(alpha),
+              color='red',
+              linewidths=1.0,
+              zorder=2,
+              linestyle='dashed') 
+    ax.text(CKS2018.beta_star(alpha) + (qv - cv) * 0.02,
+            (tiltedCHSH.trivial_lower_bound(alpha)-ystart)*0.35+ystart,
+            r'$\beta^*\approx{}$'.format(np.round(CKS2018.beta_star(alpha),2)),
+            color='red',
+            fontsize=18)
 
 
-# plot the results from Bancal et al.
-also_if_trivial = False
-BNSVY2015_lower_bounds = BNSVY2015.lower_bounds(alpha=alpha,
-                                                also_if_trivial=also_if_trivial)
-BNSVY2015_violations = BNSVY2015.violations(alpha=alpha, also_if_trivial=also_if_trivial)
-plt.plot(BNSVY2015_violations, BNSVY2015_lower_bounds, 'g.')
+    ax.tick_params('both',labelsize=18)
+    ax.set_ylim([ystart, 1.03])
+    
+    return ax
 
-# plot the CKS18 results
-CKS2018_violations = CKS2018.violations(alpha=alpha, also_if_trivial=False)
-CKS2018_lower_bounds = \
-        [ CKS2018.s(alpha=alpha) * beta + CKS2018.mu(alpha=alpha) for beta in CKS2018_violations]
-plt.plot(CKS2018_violations, CKS2018_lower_bounds, 'r')
 
-# plot trivial lower bound
-if len(CKS2018_violations) > len(BNSVY2015_violations):
-    violations = CKS2018_violations
-else:
-    violations = BNSVY2015_violations
 
-trivial_lowbound = tiltedCHSH.trivial_lower_bound(alpha)
-plt.plot(violations, np.array([trivial_lowbound for __ in violations]),'--',color='0.75')
+plt.rcParams['xtick.labelsize'] = 12
+plt.rcParams['text.latex.preamble']=[r"\usepackage{lmodern}"]
+params = {'text.usetex' : True,
+        'font.size' : 20,
+        'font.family' : 'lmodern',
+        'text.latex.unicode' : True
+        }
+plt.rcParams.update(params)
 
-# plot trivial upper bound
-(a, b) = tiltedCHSH.trivial_upper_bound(alpha)
-plt.plot(violations, [a * violation + b for violation in violations],':',color='0.75')
-#
-# plot layout
-plt.title('hoi',fontsize=14)
-#plt.xlim([classval(alpha),quantumval(alpha)+0.02])
-#plt.ylim([ystart,1.03])
-plt.xlabel(r'$\beta$',fontsize=14)
+axes = {}
+fig, [axes[0], axes[0.5], axes[1]] = plt.subplots(3,1,figsize=(20,100))
+fig.set_size_inches(6.5,17.5,forward=True)
+for ax in list(axes.values()):
+    ax.set_aspect('auto')
+
+axes[1].set_xlabel('$\\beta_{\\alpha}$',fontsize=20)
+plt.subplots_adjust(top=1.00, bottom=0.07, left=0.06, right=0.99)
+
+ystarts = {0 : 0.4,
+           0.5 : 0.6,
+           1.0 : 0.75}
+dotsizes = {0 : 4,
+            0.5 : 7,
+            1.0 : 7}
+
+for alpha in [0, 0.5, 1]:
+    axes[alpha] = create_plot(ax=axes[alpha],
+                              alpha=alpha,
+                              ystart=ystarts[alpha],
+                              dotsize=dotsizes[alpha])
+
+
 
 plt.show()
 

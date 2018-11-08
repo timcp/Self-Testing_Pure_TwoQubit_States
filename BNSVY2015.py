@@ -103,6 +103,5 @@ def violations(alpha, also_if_trivial=True):
     lowbounds = lower_bounds(alpha=alpha, also_if_trivial=False)
     num_lowbounds = len(lowbounds)
     num_violations = len(violations)
-    print(violations)
     return violations[num_violations - num_lowbounds :]
 

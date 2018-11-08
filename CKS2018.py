@@ -35,11 +35,11 @@ def beta_star(alpha):
 
 
 def violations(alpha, also_if_trivial=True):
-    violations = tiltedCHSH.betas(alpha=alpha)
+    violations = tiltedCHSH.betas(alpha=alpha, numpoints=100)
     if also_if_trivial:
         return violations
     else:
         bstar = beta_star(alpha)
-        return [violation for violation in violations if violation > bstar]
+        return [violation for violation in violations if violation >= bstar]
 
 

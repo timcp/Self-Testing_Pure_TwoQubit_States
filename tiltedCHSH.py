@@ -44,13 +44,15 @@ def trivial_upper_bound(alpha):
     return (a,b)
 
 
-def betas(alpha):
+def betas(alpha, numpoints=None):
     """auxillary function"""
     qval = quantum_value(alpha=alpha)
-    start = 2.0
-    delta = 0.01
+    beta = classical_value(alpha=alpha)
     violations = []
-    beta = start
+    if numpoints is None:
+        delta = 0.01
+    else:
+        delta = (qval - beta)/numpoints
     while beta < qval:
         violations.append(beta)
         beta += delta
