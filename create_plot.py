@@ -11,7 +11,7 @@ from matplotlib.ticker import NullFormatter  # useful for `logit` scale
 
 
 
-def create_plot(ax, alpha, ystart, dotsize):
+def create_plot(ax, alpha, ystart, dotsize, num_decimals_beta_star):
     
     # plot the results from Bancal et al.
     also_if_trivial = False
@@ -22,7 +22,6 @@ def create_plot(ax, alpha, ystart, dotsize):
     
     # plot the CKS18 results
     CKS2018_violations = CKS2018.violations(alpha=alpha, also_if_trivial=False)
-    print(min(CKS2018_violations))
     CKS2018_lower_bounds = \
             [ CKS2018.s(alpha=alpha) * beta + CKS2018.mu(alpha=alpha) for beta in CKS2018_violations]
     ax.plot(CKS2018_violations, CKS2018_lower_bounds, 'r')
@@ -56,7 +55,7 @@ def create_plot(ax, alpha, ystart, dotsize):
               linestyle='dashed') 
     ax.text(CKS2018.beta_star(alpha) + (qv - cv) * 0.02,
             (tiltedCHSH.trivial_lower_bound(alpha)-ystart)*0.35+ystart,
-            r'$\beta^*\approx{}$'.format(np.round(CKS2018.beta_star(alpha),2)),
+            r'$\beta^*\approx{}$'.format(np.round(CKS2018.beta_star(alpha),num_decimals_beta_star)),
             color='red',
             fontsize=18)
 
@@ -65,6 +64,7 @@ def create_plot(ax, alpha, ystart, dotsize):
     ax.set_ylim([ystart, 1.03])
     
     return ax
+
 
 
 
@@ -83,6 +83,7 @@ fig.set_size_inches(6.5,17.5,forward=True)
 for ax in list(axes.values()):
     ax.set_aspect('auto')
 
+
 axes[1].set_xlabel('$\\beta_{\\alpha}$',fontsize=20)
 plt.subplots_adjust(top=1.00, bottom=0.07, left=0.06, right=0.99)
 
@@ -93,13 +94,18 @@ dotsizes = {0 : 4,
             0.5 : 7,
             1.0 : 7}
 
+num_decimals_beta_star = {0 : 2,
+                          0.5 : 2,
+                          1.0 : 3}
+
 for alpha in [0, 0.5, 1]:
     axes[alpha] = create_plot(ax=axes[alpha],
                               alpha=alpha,
                               ystart=ystarts[alpha],
-                              dotsize=dotsizes[alpha])
+                              dotsize=dotsizes[alpha],
+                              num_decimals_beta_star=num_decimals_beta_star[alpha])
 
 
 
 plt.show()
-
+#plt.savefig("./plots/CKS18_vs_BNSVY15.png")
