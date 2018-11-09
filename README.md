@@ -3,9 +3,7 @@
 arXiv-link: ...
 
 The code in this repository supports the finding in the paper *Robust self-testing of two-qubit states* by Tim Coopmans, Jędrek Kaniewski and Christian Schaffner (2018, arXiv-link). Using this code one can numerically verify the positivity of the operator
-```
-T_{\alpha}(a,b) = K_{\alpha}(a,b) - s_{\alpha} W_{\alpha} (a,b) - \mu_{\alpha} 1
-```
+$$T_{\alpha}(a,b) = K_{\alpha}(a,b) - s_{\alpha} W_{\alpha} (a,b) - \mu_{\alpha} 1$$
 over a discretization of ```(a,b) \in [0, \pi/4] \times [0, \pi/2]``` (see also eq. ... on page ... of the article). Secondly, using this code, one can also reproduce the plot from fig. 1 in the article.
 
 ## File overview
