@@ -1,5 +1,8 @@
 import tiltedCHSH
 import math
+import numpy as np
+from tiltedCHSH import t, Id, X, Y, Z
+
 
 def s(alpha):
     """
@@ -41,5 +44,87 @@ def violations(alpha, also_if_trivial=True):
     else:
         bstar = beta_star(alpha)
         return [violation for violation in violations if violation >= bstar]
+
+
+# defining the extraction channels
+
+def b_star(alpha):
+    return np.arcsin( np.sqrt( (4 - alpha*alpha) / 8. ) )
+
+def Gamma(x,cutoffval):
+    if x <= cutoffval:
+        return X
+    else:
+        return Z
+
+def conjugate(A, U):
+    """
+    Computes the matrix product :math:`UAU^{\dagger}`.
+    """
+    return np.matmul(np.matmul(U, A), U.getH())
+
+
+
+def g(x):
+    return (1.+np.sqrt(2.))*(np.cos(x) + np.sin(x) - 1.)
+
+
+def effective_angle(alpha, x):
+    bs = b_star(alpha)
+    if x <= bs:
+        return x * np.pi / (4.*bs)
+    else:
+        return np.pi/2. - np.pi/4. * (np.pi - 2*x)/(np.pi - 2*bs)
+
+
+#def Lambda(angle, Gamma_operator, rhoAB, register=0):
+#    g_value = g(angle)
+#    if register == 0:
+#        term = t(Gamma_operator,Id)
+#    elif register == 1:
+#        term = t(Id, Gamma_operator)
+#    else:
+#        raise Exception
+#    return 0.5 * ((1. + g_value) * rhoAB +
+#                  (1. - g_value) * term
+#                 )
+#
+#def LambdaA(x, rhoAB):
+#    return Lambda(angle=x,
+#                  rhoAB=rhoAB,
+#                  Gamma_operator=Gamma(x, np.pi/4.),
+#                  register=0)
+#
+#
+#def LambdaB(alpha,x,rhoAB):
+#    return Lambda(angle=effective_angle(alpha=alpha, x=x),
+#                  rhoAB=rhoAB,
+#                  Gamma_operator=Gamma(x, b_star(alpha)),
+#                  register=1)
+           
+def gB(alpha, x):
+    return g(effective_angle(alpha=alpha, x=x))
+
+def LambdaA(x,rhoAB):
+    c0 = 0.5*(1.+g(x))
+    c1 = 0.5*(1.-g(x))
+    cutoffvalA = np.pi/4.
+    return c0*rhoAB +\
+            c1*conjugate(rhoAB,t(Gamma(x,cutoffvalA),Id))
+
+def LambdaB(alpha,x,rhoAB):
+    c0 = 0.5*(1.+gB(alpha,x))
+    c1 = 0.5*(1.-gB(alpha,x))
+    cutoffvalB = b_star(alpha)
+    return c0*rhoAB +\
+            c1*conjugate(rhoAB,t(Id,Gamma(x,cutoffvalB)))
+
+
+# defining K and T
+def K(alpha, a, b):
+    return LambdaB(alpha, b, LambdaA(a, tiltedCHSH.Phi(alpha)))
+
+def T(alpha, a, b):
+    return K(alpha, a, b) - s(alpha) * tiltedCHSH.tilted_CHSH_operator(alpha, a, b) - mu(alpha) * t(Id, Id)
 
 

@@ -108,4 +108,4 @@ for alpha in [0, 0.5, 1]:
 
 
 plt.show()
-#plt.savefig("./plots/CKS18_vs_BNSVY15.png")
+#plt.savefig("./output/CKS18_vs_BNSVY15.png")
