@@ -94,7 +94,7 @@ if __name__ == "__main__":
 
 
 
-    absminevals = [np.abs(mineval) for mineval in minevals]
+    absminevals = [np.abs(mineval) for mineval in list(minevals.values())]
     plt.yscale('log')
     plt.ylim([0, max(absminevals)*1.04])
     plt.scatter(alpha_list, absminevals)

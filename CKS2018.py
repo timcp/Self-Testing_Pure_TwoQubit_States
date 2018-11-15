@@ -10,8 +10,8 @@ def s(alpha):
     :math:`s_{\alpha} \cdot \beta + \mu_{\alpha}`
     as function of the violation :math:`\beta`, as proven in [CKS18].
     """
-    sqrt1 = math.sqrt( 4 - alpha * alpha) / tiltedCHSH.quantum_value(alpha)
-    sqrt2 = math.sqrt( 2 * alpha * alpha) / tiltedCHSH.quantum_value(alpha)
+    sqrt1 = np.sqrt( 4 - alpha * alpha) / tiltedCHSH.quantum_value(alpha)
+    sqrt2 = np.sqrt( 2 * alpha * alpha) / tiltedCHSH.quantum_value(alpha)
     return ( 1 - (1 + sqrt1 + sqrt2 )/4. ) / (tiltedCHSH.quantum_value(alpha)-tiltedCHSH.classical_value(alpha))
 
 def mu(alpha):
@@ -38,7 +38,7 @@ def beta_star(alpha):
 
 
 def violations(alpha, also_if_trivial=True):
-    violations = tiltedCHSH.betas(alpha=alpha, numpoints=1000)
+    violations = tiltedCHSH.possible_violations(alpha=alpha, number_of_points=1000)
     if also_if_trivial:
         return violations
     else:
@@ -122,7 +122,7 @@ def LambdaB(alpha,x,rhoAB):
 
 # defining K and T
 def K(alpha, a, b):
-    return LambdaB(alpha, b, LambdaA(a, tiltedCHSH.Phi(alpha)))
+    return LambdaB(alpha, b, LambdaA(a, tiltedCHSH.target_state(alpha)))
 
 def T(alpha, a, b):
     return K(alpha, a, b) - s(alpha) * tiltedCHSH.tilted_CHSH_operator(alpha, a, b) - mu(alpha) * t(Id, Id)
