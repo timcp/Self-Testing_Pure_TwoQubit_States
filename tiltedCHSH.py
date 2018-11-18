@@ -9,7 +9,7 @@
 # This file is part of the supporting material      #
 # belonging to:                                     #
 # "Robust self-testing of two-qubit states"         #
-# Tim Coopmans, Jędrek Kaniewski and Christian      #
+# Tim Coopmans, Jędrzej Kaniewski and Christian     #
 # Schaffner (2018)                                  #
 # arXiv:                                            #
 #                                                   #
@@ -38,8 +38,9 @@ def t(A, B):
 def target_state(alpha):
     """
     The target state that the tilted-CHSH-operator
-    self-tests. The target state is, up to local unitaries,
-    equal to :math:`\cos(\theta)|00\rangle + \sin(\theta)|11\rangle`.
+    self-tests, as given in equation (B2) in the article.
+    The target state is, up to local unitaries, equal
+    to :math:`\cos(\theta)|00\rangle + \sin(\theta)|11\rangle`.
 
     The value :math:`\alpha \in [0, 2)` "sweeps out"
     all possible pure partially-entangled two-qubit states,
@@ -99,7 +100,7 @@ def trivial_lower_bound(alpha):
     """
     Returns the trivial lower bound to the extractability of the
     state :math:`\cos(\theta_{\alpha}) |00\rangle + \sin(\theta_{\alpha} |11\rangle`
-    where :math:`\theta_{\alpha}` is given in the paper.
+    where :math:`\theta_{\alpha}` is as in eq. (11).
     The parameter :math:`\alpha \in [0, 2)`.
     """
     return 0.5 * ( math.sqrt( ( 2 * alpha * alpha / (4 + alpha * alpha) ) ) + 1)
@@ -108,7 +109,7 @@ def trivial_upper_bound(alpha):
     """
     Computes the trivial upper bound to the extractability of the
     state :math:`\cos(\theta_{\alpha}) |00\rangle + \sin(\theta_{\alpha} |11\rangle`
-    where :math:`\theta_{\alpha}` is given in the paper.
+    where :math:`\theta_{\alpha}` is as in eq. (11).
     The parameter :math:`\alpha \in [0, 2)`.
 
     Returns
