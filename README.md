@@ -13,9 +13,7 @@ over a discretization of (a,b) &isin; \[0, &pi;/4\] &times; \[0, &pi;/2\] (see a
 
 ## Downloading the code
 
-In order to download the code, click the green button on the right top of this web page:
-
-![Button "Clone or download"](pics/button_download.png)
+In order to download the code, click the green button on the right top of this web page with the text **Clone or download**. 
 
 For downloading the code as a compressed file, click **Download ZIP**. 
 
