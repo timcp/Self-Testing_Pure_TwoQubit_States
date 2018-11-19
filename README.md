@@ -2,45 +2,55 @@
 
 arXiv-link: ...
 
-The code in this repository supports the finding in the paper *Robust self-testing of two-qubit states* by Tim Coopmans, Jędrek Kaniewski and Christian Schaffner (2018, arXiv-link). Using this code one can numerically verify the positivity of the operator
+The code in this repository supports the finding in the paper *Robust self-testing of two-qubit states* by Tim Coopmans, Jędrzej Kaniewski and Christian Schaffner (2018, arXiv-link). Using this code one can numerically verify the positivity of the operator
 
-![T=K-sW-mu1, also see the article.](eq_T_operator.gif)
+<dl>
+T<sub>&alpha;</sub>(a, b) = K<sub>&alpha;</sub>(a, b) - s W<sub>&alpha;</sub>(a, b) - &mu I
+</dl>
 
-over a discretization of ```(a,b) \in [0, \pi/4] \times [0, \pi/2]``` (see also eq. ... on page ... of the article). Secondly, using this code, one can also reproduce the plot from fig. 1 in the article.
+over a discretization of (a,b) &sin; \[0, &pi;/4\] \times \[0, &pi;/2\] (see also the definition of T<sub>&alpha;</sub>(a, b) on page 14 of the article).
+
+
+## Downloading the code
+
+In order to download the code, click the green button on the right top of this web page:
+
+![Button "Clone or download"](pics/button_download.png)
+
+For downloading the code as a compressed file, click **Download ZIP**. 
+
+An alternative that uses the command line is to copy the url [https://github.com/timcp/Self-Testing_Pure_TwoQubit_States.git](https://github.com/timcp/Self-Testing_Pure_TwoQubit_States.git). Then open a terminal and execute the command
+```
+git clone <copied_url>
+```
+to save the code on your computer.
+
+## Running the code
+
+The code has been written in [Python](https://www.python.org/) and can be run from any Python development environment (such as [PyCharm](https://en.wikipedia.org/wiki/PyCharm)). One can also run the code directly in a terminal by first navigating to the folder where you stored the code
+```
+cd C://path/where/you/downloaded/the/code
+```
+followed by executing the command
+```
+python3 numerical_evidence_CKS2018_bounds.py
+```
+
+Note: the code only works with Python 3 instead of Python 2. To check your Python version, open a terminal, type `python -V` and press enter. The output should be something like ```Python 3.x.x```.
 
 ## File overview
 
 **Definitions**
 
  - *tiltedCHSH.py*: definition of the tilted CHSH operators and its quantum- and classical value.
- - *BNSVY2015.py*: the data as used by Bancal et al., *Physical characterization of quantum devices from nonlocal correlations* (2015),  doi: [10.1103/PhysRevA.91.022115](https://journals.aps.org/pra/abstract/10.1103/PhysRevA.91.022115).
  - *CKS2018.py*: the definitions from the paper *Robust self-testing of two-qubit states* as specified above (arXiv-link).
 
 **Numerics**
 
- - *create_plot.py*: code for reproducing fig. 1 of the article.
  - *output*: folder where the plots and data produced by the code will be put.
- - *numerical_evidence_CKS2018_bounds.py*: code for numerically verifying the positibity of the operator ```T_{\alpha} (a,b)``` as defined above.
+ - *numerical_evidence_CKS2018_bounds.py*: code for numerically verifying the positivity of the operator T<sub>&alpha;</sub>(a, b) as defined above.
 
 **Miscellaneous**
 
  - *README.md*: this file.
- - *test_implementation.py*: some tests that implementation has been done correctly.
-
-
-## Running the code
-
-The code has been written in Python and can be run from a terminal using e.g.
-```
-python3 numerical_evidence_CKS2018_bounds.py
-```
-
-Note: the code only works with `python3` instead of `python 2`.
-
-To check your python version, perform
-```
-import sys
-print(sys.executable)
-```
-
-
+ - *pics*: folder with images for this README file.

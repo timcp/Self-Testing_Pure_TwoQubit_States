@@ -23,7 +23,6 @@
 
 import numpy as np
 import CKS2018
-import matplotlib.pyplot as plt
 
 def get_smallest_eigenvalue_of_hermitian(A):
     """
@@ -115,11 +114,17 @@ if __name__ == "__main__":
     # Parameters of the numerics    #
     #################################
 
-    # Define the grid specifications
-    epsilon = 0.01 # grid coarseness in both x and y
+    # Grid coarseness in both x and y
+    # For the analysis of the article,
+    # the parameter epsilon was set
+    # to 0.01
+    epsilon = 0.1 
     
+    # For the analysis in the article,
+    # the parameter delta_alpha
+    # was set to 0.001
+    delta_alpha = 0.1
     alpha_start = 0.
-    delta_alpha = 0.001
     alpha_stop = 2. - delta_alpha
     
 
@@ -181,20 +186,7 @@ if __name__ == "__main__":
                            dictionary=minevals,
                            description_preamble=description_preamble)
     
-
-    # Create a plot of the data
-    absminevals = [np.abs(mineval) for mineval in list(minevals.values())]
-    plt.yscale('log')
-    # plt.ylim([0, max(absminevals)*1.04])
-    plt.scatter(alpha_list, absminevals)
-    plt.xlabel(r"$\alpha$")
-    plt.ylabel(r"$|\min_{(a,b)}\quad\lambda_{\min} T_{\alpha}(a,b)|$")
-
-    # Save the plot of the data
-    plot_save_location = "output/minimum_eigenvalues.pdf"
-    plt.savefig(plot_save_location)
-
-    # user output
-    print("A plot of the minimum eigenvalues can be found in {};\
-           the data itself is stored in {}".format(plot_save_location, data_save_location))
+    # User output
+    print("The result of computing the minimum eigenvalues can be found in {}"\
+           .format(data_save_location))
 
