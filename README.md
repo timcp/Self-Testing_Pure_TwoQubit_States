@@ -51,4 +51,3 @@ Note: the code only works with Python 3 instead of Python 2. To check your Pytho
 **Miscellaneous**
 
  - *README.md*: this file.
- - *pics*: folder with images for this README file.
