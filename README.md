@@ -5,7 +5,7 @@ arXiv-link: ...
 The code in this repository supports the finding in the paper *Robust self-testing of two-qubit states* by Tim Coopmans, Jędrzej Kaniewski and Christian Schaffner (2018, arXiv-link). Using this code one can numerically verify the positivity of the operator
 
 <dl>
-T<sub>&alpha;</sub>(a, b) = K<sub>&alpha;</sub>(a, b) - s W<sub>&alpha;</sub>(a, b) - &mu; I
+T<sub>&alpha;</sub>(a, b) = K<sub>&alpha;</sub>(a, b) - s<sub>&alpha;</sub> W<sub>&alpha;</sub>(a, b) - &mu;<sub>&alpha;</sub> I
 </dl>
 
 over a discretization of (a,b) &isin; \[0, &pi;/4\] &times; \[0, &pi;/2\] (see also the definition of T<sub>&alpha;</sub>(a, b) on page 14 of the article).
