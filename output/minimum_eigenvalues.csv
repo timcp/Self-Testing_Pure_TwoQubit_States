@@ -8,8 +8,8 @@
 # article.
 #
 # Used parameters:
-# - epsilon : 0.01
-# - delta_alpha : 0.001
+# - number_of_points : 100
+# - number_of_alphas : 2000
 #
 # 
 # The first column contains values for alpha, the second the minimum

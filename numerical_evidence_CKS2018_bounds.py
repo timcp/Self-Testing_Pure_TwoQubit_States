@@ -38,16 +38,14 @@ def get_smallest_eigenvalue_of_hermitian(A):
     return np.real(smallest_eigenvalue)
 
 
-def create_twodimensional_grid(x_start, x_stop, delta_x, y_start, y_stop, delta_y):
-    number_of_x_grid_points = int(np.ceil( (x_stop - x_start) / delta_x))
-    number_of_y_grid_points = int(np.ceil( (y_stop - y_start) / delta_y))
+def create_twodimensional_grid(x_start, x_stop, num_x, y_start, y_stop, num_y):
     x_points_list = np.linspace(start=x_start,
                                 stop=x_stop,
-                                num=number_of_x_grid_points,
+                                num=num_x,
                                 endpoint=True)
     y_points_list = np.linspace(start=y_start,
                                 stop=y_stop,
-                                num=number_of_y_grid_points,
+                                num=num_y,
                                 endpoint=True)
     return [(x, y) for x in x_points_list for y in y_points_list]
 
@@ -86,7 +84,7 @@ def write_data_to_csv_file(data_save_location, dictionary, description_preamble)
             datafile.write("{}, {}\n".format(key, value))
     datafile.close()
 
-def get_description_string(epsilon, delta_alpha, worst_case_minimum_description):
+def get_description_string(number_of_points, number_of_alphas, worst_case_minimum_description):
     return \
 """#
 # This file contains values for alpha in [0, 2), the parameter of
@@ -98,14 +96,14 @@ def get_description_string(epsilon, delta_alpha, worst_case_minimum_description)
 # article.
 #
 # Used parameters:
-# - epsilon : %s
-# - delta_alpha : %s
+# - number_of_points : %s
+# - number_of_alphas : %s
 #
 # 
 # The first column contains values for alpha, the second the minimum
 # eigenvalue of T_{alpha} over the grid.
 #%s#
-"""%(epsilon, delta_alpha, worst_case_minimum_description)
+"""%(number_of_points, number_of_alphas, worst_case_minimum_description)
 
 
 if __name__ == "__main__":
@@ -114,25 +112,24 @@ if __name__ == "__main__":
     # Parameters of the numerics    #
     #################################
 
-    # Grid coarseness in both x and y
-    # For the analysis of the article,
-    # the parameter epsilon was set
-    # to 0.01
-    epsilon = 0.1 
+    # Grid coarseness
+    # For the analysis in the article,
+    # the parameter number_of_points
+    # was set to 100
+    number_of_points = 100
     
     # For the analysis in the article,
-    # the parameter delta_alpha
-    # was set to 0.001
-    delta_alpha = 0.1
+    # the parameter number_of_alphas
+    # was set to 2000
+    number_of_alphas = 2000
     alpha_start = 0.
-    alpha_stop = 2. - delta_alpha
+    alpha_stop = 2. - 2./number_of_alphas
     
 
     #################################
     # Performing the numerics       #
     #################################
 
-    number_of_alphas = int(np.ceil( ( alpha_stop - alpha_start) / delta_alpha )) + 1
     alpha_list = np.linspace(start=alpha_start,
                              stop=alpha_stop,
                              num=number_of_alphas,
@@ -142,10 +139,10 @@ if __name__ == "__main__":
     # Create the grid: discretization of [0, pi/4] x [0, pi/2]
     grid = create_twodimensional_grid(x_start=0.,
                                       x_stop=np.pi/4.,
-                                      delta_x = epsilon,
+                                      num_x=number_of_points,
                                       y_start=0.,
                                       y_stop=np.pi/2.,
-                                      delta_y = epsilon)
+                                      num_y=2*number_of_points)
 
 
     # We store the minimum of the smallest eigenvalue for each alpha in a dictionary
@@ -178,8 +175,8 @@ if __name__ == "__main__":
     #################################
 
     # Save the data
-    description_preamble = get_description_string(epsilon=epsilon,
-                                                  delta_alpha=delta_alpha,
+    description_preamble = get_description_string(number_of_points=number_of_points,
+                                                  number_of_alphas=number_of_alphas,
                                                   worst_case_minimum_description=worst_case_minimum_description)
     data_save_location = "output/minimum_eigenvalues.csv"
     write_data_to_csv_file(data_save_location=data_save_location,
