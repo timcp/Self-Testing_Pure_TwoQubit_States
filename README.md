@@ -1,8 +1,8 @@
 # Numerics supporting the findings in "Robust self-testing of two-qubit states"
 
-arXiv-link: ...
+([link to the publication](https://arxiv.org/abs/1902.00870))
 
-The code in this repository supports the finding in the paper *Robust self-testing of two-qubit states* by Tim Coopmans, Jędrzej Kaniewski and Christian Schaffner (2018, arXiv-link). Using this code one can numerically verify the positivity of the operator
+The code in this repository supports the finding in the paper *Robust self-testing of two-qubit states* by Tim Coopmans, Jędrzej Kaniewski and Christian Schaffner (2018, [arXiv-link](https://arxiv.org/abs/1902.00870)). Using this code one can numerically verify the positivity of the operator
 
 <dl>
 T<sub>&alpha;</sub>(a, b) = K<sub>&alpha;</sub>(a, b) - s<sub>&alpha;</sub> W<sub>&alpha;</sub>(a, b) - &mu;<sub>&alpha;</sub> I
@@ -34,20 +34,20 @@ followed by executing the command
 python3 numerical_evidence_CKS2018_bounds.py
 ```
 
-Note: the code only works with Python 3 instead of Python 2. To check your Python version, open a terminal, type `python -V` and press enter. The output should be something like ```Python 3.x.x```.
+Note: the code only works with Python 3 instead of Python 2. To check your Python version, open a terminal, type `python -V` and press enter. The output should be something like `Python 3.x.x`.
 
 ## File overview
 
 **Definitions**
 
- - *tiltedCHSH.py*: definition of the tilted CHSH operators and its quantum- and classical value.
- - *CKS2018.py*: the definitions from the paper *Robust self-testing of two-qubit states* as specified above (arXiv-link).
+- *tiltedCHSH.py*: definition of the tilted CHSH operators and its quantum- and classical value.
+- *CKS2018.py*: the definitions from the paper *Robust self-testing of two-qubit states* as specified above ([arXiv-link](https://arxiv.org/abs/1902.00870)).
 
 **Numerics**
 
- - *output*: folder where the plots and data produced by the code will be put.
- - *numerical_evidence_CKS2018_bounds.py*: code for numerically verifying the positivity of the operator T<sub>&alpha;</sub>(a, b) as defined above.
+- *output*: folder where the plots and data produced by the code will be put.
+- *numerical_evidence_CKS2018_bounds.py*: code for numerically verifying the positivity of the operator T<sub>&alpha;</sub>(a, b) as defined above.
 
 **Miscellaneous**
 
- - *README.md*: this file.
+- *README.md*: this file.
